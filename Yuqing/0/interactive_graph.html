@@ -1,0 +1,127 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 600px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "IA", "label": "IA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PP", "label": "PP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "AA", "label": "AA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "BA", "label": "BA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PI", "label": "PI", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "DR", "label": "DR", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "OC", "label": "OC", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CB", "label": "CB", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TR", "label": "TR", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "FI", "label": "FI", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "DP", "label": "DP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "nl", "label": "nl", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mm", "label": "mm", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "IC", "label": "IC", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PT", "label": "PT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "AT", "label": "AT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "AU", "label": "AU", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "SP", "label": "SP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CA", "label": "CA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PS", "label": "PS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Mr", "label": "Mr", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Ta", "label": "Ta", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "HI", "label": "HI", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iR", "label": "iR", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "MR", "label": "MR", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TS", "label": "TS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TA", "label": "TA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RI", "label": "RI", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "AP", "label": "AP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "OB", "label": "OB", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LC", "label": "LC", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iM", "label": "iM", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mp", "label": "mp", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "WA", "label": "WA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CT", "label": "CT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "wa", "label": "wa", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mt", "label": "mt", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PA", "label": "PA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "eP", "label": "eP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LS", "label": "LS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RP", "label": "RP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "eL", "label": "eL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RC", "label": "RC", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iL", "label": "iL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "SR", "label": "SR", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mP", "label": "mP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "GA", "label": "GA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "me", "label": "me", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ss", "label": "ss", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "eY", "label": "eY", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "FM", "label": "FM", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PC", "label": "PC", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "VA", "label": "VA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Pd", "label": "Pd", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "CD", "label": "CD", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TE", "label": "TE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "DE", "label": "DE", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Te", "label": "Te", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iP", "label": "iP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iF", "label": "iF", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "BL", "label": "BL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mo", "label": "mo", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TC", "label": "TC", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TD", "label": "TD", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "MP", "label": "MP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TB", "label": "TB", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TN", "label": "TN", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "TL", "label": "TL", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RS", "label": "RS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "VP", "label": "VP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ER", "label": "ER", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "eR", "label": "eR", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "eA", "label": "eA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "eS", "label": "eS", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "mn", "label": "mn", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "m-", "label": "m-", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iA", "label": "iA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iO", "label": "iO", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "iS", "label": "iS", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"from": "IA", "to": "PP", "width": 10}, {"from": "IA", "to": "AA", "width": 0}, {"from": "IA", "to": "BA", "width": 10}, {"from": "IA", "to": "IA", "width": 10}, {"from": "IA", "to": "PI", "width": 10}, {"from": "IA", "to": "DR", "width": 0}, {"from": "IA", "to": "OC", "width": 0}, {"from": "IA", "to": "CB", "width": 0}, {"from": "IA", "to": "TR", "width": 0}, {"from": "IA", "to": "FI", "width": 0}, {"from": "IA", "to": "DP", "width": 0}, {"from": "IA", "to": "nl", "width": 0}, {"from": "IA", "to": "mm", "width": 0}, {"from": "IA", "to": "IC", "width": 0}, {"from": "IA", "to": "PT", "width": 0}, {"from": "IA", "to": "AT", "width": 0}, {"from": "IA", "to": "AU", "width": 0}, {"from": "IA", "to": "SP", "width": 0}, {"from": "IA", "to": "CA", "width": 0}, {"from": "PP", "to": "TR", "width": 10}, {"from": "PP", "to": "BA", "width": 10}, {"from": "PP", "to": "PT", "width": 0}, {"from": "PP", "to": "AT", "width": 0}, {"from": "PP", "to": "PS", "width": 0}, {"from": "PP", "to": "CA", "width": 0}, {"from": "AA", "to": "BA", "width": 0}, {"from": "AA", "to": "Mr", "width": 0}, {"from": "AA", "to": "Ta", "width": 0}, {"from": "AA", "to": "HI", "width": 0}, {"from": "AA", "to": "TR", "width": 0}, {"from": "AA", "to": "CB", "width": 0}, {"from": "AA", "to": "DP", "width": 0}, {"from": "AA", "to": "mm", "width": 0}, {"from": "AA", "to": "nl", "width": 0}, {"from": "AA", "to": "iR", "width": 0}, {"from": "AA", "to": "PT", "width": 0}, {"from": "BA", "to": "MR", "width": 10}, {"from": "BA", "to": "TS", "width": 10}, {"from": "BA", "to": "nl", "width": 0}, {"from": "BA", "to": "TA", "width": 0}, {"from": "BA", "to": "TR", "width": 0}, {"from": "BA", "to": "mm", "width": 0}, {"from": "BA", "to": "RI", "width": 0}, {"from": "PI", "to": "BA", "width": 10}, {"from": "PI", "to": "TR", "width": 0}, {"from": "PI", "to": "nl", "width": 0}, {"from": "PI", "to": "mm", "width": 0}, {"from": "DR", "to": "BA", "width": 0}, {"from": "DR", "to": "TR", "width": 0}, {"from": "DR", "to": "PI", "width": 0}, {"from": "DR", "to": "IC", "width": 0}, {"from": "DR", "to": "nl", "width": 0}, {"from": "DR", "to": "CB", "width": 0}, {"from": "DR", "to": "AT", "width": 0}, {"from": "DR", "to": "AP", "width": 0}, {"from": "DR", "to": "PT", "width": 0}, {"from": "DR", "to": "AU", "width": 0}, {"from": "DR", "to": "DP", "width": 0}, {"from": "OC", "to": "OB", "width": 0}, {"from": "CB", "to": "BA", "width": 0}, {"from": "TR", "to": "TR", "width": 0}, {"from": "TR", "to": "LC", "width": 0}, {"from": "FI", "to": "BA", "width": 0}, {"from": "FI", "to": "TR", "width": 0}, {"from": "FI", "to": "PI", "width": 0}, {"from": "FI", "to": "PP", "width": 0}, {"from": "FI", "to": "AA", "width": 0}, {"from": "DP", "to": "BA", "width": 0}, {"from": "DP", "to": "TR", "width": 0}, {"from": "nl", "to": "PT", "width": 10}, {"from": "nl", "to": "AT", "width": 0}, {"from": "nl", "to": "mm", "width": 0}, {"from": "nl", "to": "iM", "width": 0}, {"from": "nl", "to": "mp", "width": 0}, {"from": "nl", "to": "WA", "width": 0}, {"from": "nl", "to": "SP", "width": 0}, {"from": "nl", "to": "CT", "width": 0}, {"from": "nl", "to": "wa", "width": 0}, {"from": "nl", "to": "CA", "width": 0}, {"from": "nl", "to": "nl", "width": 0}, {"from": "nl", "to": "IC", "width": 0}, {"from": "nl", "to": "mt", "width": 0}, {"from": "nl", "to": "AP", "width": 0}, {"from": "nl", "to": "PA", "width": 0}, {"from": "nl", "to": "eP", "width": 0}, {"from": "nl", "to": "TR", "width": 0}, {"from": "nl", "to": "LS", "width": 0}, {"from": "nl", "to": "MR", "width": 0}, {"from": "nl", "to": "RP", "width": 0}, {"from": "nl", "to": "eL", "width": 0}, {"from": "nl", "to": "RC", "width": 0}, {"from": "nl", "to": "iL", "width": 0}, {"from": "nl", "to": "SR", "width": 0}, {"from": "nl", "to": "mP", "width": 0}, {"from": "nl", "to": "iR", "width": 0}, {"from": "nl", "to": "AU", "width": 0}, {"from": "nl", "to": "PS", "width": 0}, {"from": "nl", "to": "GA", "width": 0}, {"from": "nl", "to": "me", "width": 0}, {"from": "nl", "to": "ss", "width": 0}, {"from": "nl", "to": "eY", "width": 0}, {"from": "nl", "to": "FM", "width": 0}, {"from": "nl", "to": "PC", "width": 0}, {"from": "nl", "to": "VA", "width": 0}, {"from": "nl", "to": "Pd", "width": 0}, {"from": "nl", "to": "CD", "width": 0}, {"from": "nl", "to": "TE", "width": 0}, {"from": "nl", "to": "DE", "width": 0}, {"from": "nl", "to": "Te", "width": 0}, {"from": "nl", "to": "iP", "width": 0}, {"from": "nl", "to": "iF", "width": 0}, {"from": "nl", "to": "BL", "width": 0}, {"from": "mm", "to": "mo", "width": 0}, {"from": "mm", "to": "mp", "width": 0}, {"from": "mm", "to": "AT", "width": 0}, {"from": "mm", "to": "IC", "width": 0}, {"from": "mm", "to": "AP", "width": 0}, {"from": "mm", "to": "RC", "width": 0}, {"from": "mm", "to": "TR", "width": 0}, {"from": "mm", "to": "LS", "width": 0}, {"from": "mm", "to": "mt", "width": 0}, {"from": "mm", "to": "AU", "width": 0}, {"from": "mm", "to": "mm", "width": 0}, {"from": "mm", "to": "me", "width": 0}, {"from": "mm", "to": "CT", "width": 0}, {"from": "IC", "to": "TR", "width": 0}, {"from": "IC", "to": "TC", "width": 0}, {"from": "PT", "to": "TR", "width": 10}, {"from": "PT", "to": "mm", "width": 0}, {"from": "AT", "to": "TR", "width": 0}, {"from": "AU", "to": "TR", "width": 0}, {"from": "SP", "to": "BA", "width": 0}, {"from": "SP", "to": "TR", "width": 0}, {"from": "SP", "to": "PI", "width": 0}, {"from": "CA", "to": "TD", "width": 0}, {"from": "CA", "to": "mm", "width": 0}, {"from": "CA", "to": "TR", "width": 0}, {"from": "PS", "to": "MP", "width": 0}, {"from": "PS", "to": "TR", "width": 0}, {"from": "PS", "to": "mm", "width": 0}, {"from": "Mr", "to": "BA", "width": 0}, {"from": "Mr", "to": "DP", "width": 0}, {"from": "Mr", "to": "CB", "width": 0}, {"from": "Mr", "to": "TR", "width": 0}, {"from": "Ta", "to": "BA", "width": 0}, {"from": "Ta", "to": "CB", "width": 0}, {"from": "Ta", "to": "TR", "width": 0}, {"from": "Ta", "to": "DP", "width": 0}, {"from": "HI", "to": "TB", "width": 0}, {"from": "HI", "to": "Mr", "width": 0}, {"from": "HI", "to": "TN", "width": 0}, {"from": "HI", "to": "TR", "width": 0}, {"from": "HI", "to": "nl", "width": 0}, {"from": "HI", "to": "TL", "width": 0}, {"from": "HI", "to": "mm", "width": 0}, {"from": "HI", "to": "FM", "width": 0}, {"from": "HI", "to": "Ta", "width": 0}, {"from": "iR", "to": "mm", "width": 0}, {"from": "iR", "to": "TR", "width": 0}, {"from": "MR", "to": "mm", "width": 0}, {"from": "MR", "to": "TR", "width": 0}, {"from": "TS", "to": "nl", "width": 10}, {"from": "TS", "to": "mm", "width": 0}, {"from": "TS", "to": "TR", "width": 0}, {"from": "TA", "to": "nl", "width": 0}, {"from": "TA", "to": "mm", "width": 0}, {"from": "RI", "to": "TR", "width": 0}, {"from": "RI", "to": "TS", "width": 0}, {"from": "RI", "to": "nl", "width": 0}, {"from": "RI", "to": "MR", "width": 0}, {"from": "RI", "to": "mm", "width": 0}, {"from": "RI", "to": "TA", "width": 0}, {"from": "iM", "to": "mm", "width": 0}, {"from": "iM", "to": "TR", "width": 0}, {"from": "mp", "to": "PS", "width": 0}, {"from": "mp", "to": "PT", "width": 0}, {"from": "mp", "to": "MP", "width": 0}, {"from": "mp", "to": "TR", "width": 0}, {"from": "mp", "to": "mt", "width": 0}, {"from": "mp", "to": "PA", "width": 0}, {"from": "mp", "to": "IA", "width": 0}, {"from": "mp", "to": "CT", "width": 0}, {"from": "mp", "to": "PC", "width": 0}, {"from": "mp", "to": "mp", "width": 0}, {"from": "mp", "to": "BL", "width": 0}, {"from": "mp", "to": "Pd", "width": 0}, {"from": "mp", "to": "iP", "width": 0}, {"from": "WA", "to": "TR", "width": 0}, {"from": "CT", "to": "mt", "width": 0}, {"from": "CT", "to": "CT", "width": 0}, {"from": "CT", "to": "TR", "width": 0}, {"from": "wa", "to": "mm", "width": 0}, {"from": "wa", "to": "TR", "width": 0}, {"from": "mt", "to": "RS", "width": 0}, {"from": "mt", "to": "VP", "width": 0}, {"from": "mt", "to": "ER", "width": 0}, {"from": "mt", "to": "LC", "width": 0}, {"from": "mt", "to": "TR", "width": 0}, {"from": "AP", "to": "TR", "width": 0}, {"from": "AP", "to": "HI", "width": 0}, {"from": "PA", "to": "mm", "width": 0}, {"from": "eP", "to": "mm", "width": 0}, {"from": "eP", "to": "TR", "width": 0}, {"from": "LS", "to": "TL", "width": 0}, {"from": "LS", "to": "HI", "width": 0}, {"from": "LS", "to": "TB", "width": 0}, {"from": "LS", "to": "TR", "width": 0}, {"from": "LS", "to": "FM", "width": 0}, {"from": "RP", "to": "HI", "width": 0}, {"from": "RP", "to": "mm", "width": 0}, {"from": "RP", "to": "TR", "width": 0}, {"from": "eL", "to": "TR", "width": 0}, {"from": "eL", "to": "mm", "width": 0}, {"from": "RC", "to": "TN", "width": 0}, {"from": "RC", "to": "HI", "width": 0}, {"from": "RC", "to": "LS", "width": 0}, {"from": "RC", "to": "TR", "width": 0}, {"from": "iL", "to": "TR", "width": 0}, {"from": "SR", "to": "mm", "width": 0}, {"from": "SR", "to": "TR", "width": 0}, {"from": "mP", "to": "TR", "width": 0}, {"from": "mP", "to": "PT", "width": 0}, {"from": "mP", "to": "mm", "width": 0}, {"from": "mP", "to": "wa", "width": 0}, {"from": "GA", "to": "TR", "width": 0}, {"from": "GA", "to": "mm", "width": 0}, {"from": "me", "to": "eL", "width": 0}, {"from": "me", "to": "eR", "width": 0}, {"from": "me", "to": "eP", "width": 0}, {"from": "me", "to": "eY", "width": 0}, {"from": "me", "to": "eA", "width": 0}, {"from": "me", "to": "TR", "width": 0}, {"from": "me", "to": "eS", "width": 0}, {"from": "ss", "to": "PT", "width": 0}, {"from": "ss", "to": "CA", "width": 0}, {"from": "ss", "to": "TR", "width": 0}, {"from": "ss", "to": "LS", "width": 0}, {"from": "ss", "to": "RC", "width": 0}, {"from": "ss", "to": "IC", "width": 0}, {"from": "ss", "to": "wa", "width": 0}, {"from": "ss", "to": "AP", "width": 0}, {"from": "ss", "to": "mm", "width": 0}, {"from": "ss", "to": "RP", "width": 0}, {"from": "eY", "to": "mm", "width": 0}, {"from": "eY", "to": "TR", "width": 0}, {"from": "FM", "to": "AU", "width": 0}, {"from": "FM", "to": "mm", "width": 0}, {"from": "FM", "to": "TR", "width": 0}, {"from": "PC", "to": "TR", "width": 0}, {"from": "VA", "to": "PA", "width": 0}, {"from": "VA", "to": "TR", "width": 0}, {"from": "VA", "to": "AP", "width": 0}, {"from": "Pd", "to": "TR", "width": 0}, {"from": "CD", "to": "TR", "width": 0}, {"from": "DE", "to": "TR", "width": 0}, {"from": "Te", "to": "iR", "width": 0}, {"from": "Te", "to": "me", "width": 0}, {"from": "iP", "to": "mm", "width": 0}, {"from": "mn", "to": "IA", "width": 10}, {"from": "mn", "to": "m-", "width": 0}, {"from": "mn", "to": "mn", "width": 0}, {"from": "m-", "to": "IA", "width": 0}, {"from": "mo", "to": "mt", "width": 0}, {"from": "mo", "to": "iR", "width": 0}, {"from": "mo", "to": "CT", "width": 0}, {"from": "mo", "to": "me", "width": 0}, {"from": "mo", "to": "BA", "width": 0}, {"from": "mo", "to": "RP", "width": 0}, {"from": "mo", "to": "CA", "width": 0}, {"from": "mo", "to": "SR", "width": 0}, {"from": "mo", "to": "iA", "width": 0}, {"from": "mo", "to": "AU", "width": 0}, {"from": "mo", "to": "TR", "width": 0}, {"from": "mo", "to": "RC", "width": 0}, {"from": "mo", "to": "nl", "width": 0}, {"from": "mo", "to": "iM", "width": 0}, {"from": "mo", "to": "iO", "width": 0}, {"from": "mo", "to": "iF", "width": 0}, {"from": "mo", "to": "iS", "width": 0}, {"from": "iA", "to": "nl", "width": 0}, {"from": "iA", "to": "mm", "width": 0}, {"from": "iO", "to": "TR", "width": 0}, {"from": "iS", "to": "mm", "width": 0}, {"from": "MP", "to": "mm", "width": 0}, {"from": "MP", "to": "nl", "width": 0}, {"from": "MP", "to": "TR", "width": 0}, {"from": "TD", "to": "nl", "width": 0}, {"from": "TD", "to": "mm", "width": 0}, {"from": "TD", "to": "TR", "width": 0}, {"from": "TC", "to": "nl", "width": 0}, {"from": "TC", "to": "mm", "width": 0}, {"from": "OB", "to": "BA", "width": 0}, {"from": "OB", "to": "PI", "width": 0}, {"from": "RS", "to": "wa", "width": 0}, {"from": "RS", "to": "TR", "width": 0}, {"from": "TL", "to": "nl", "width": 0}, {"from": "TL", "to": "mm", "width": 0}, {"from": "TB", "to": "nl", "width": 0}, {"from": "TB", "to": "mm", "width": 0}, {"from": "TN", "to": "nl", "width": 0}, {"from": "TN", "to": "mm", "width": 0}, {"from": "eR", "to": "nl", "width": 0}, {"from": "eR", "to": "mm", "width": 0}, {"from": "eA", "to": "nl", "width": 0}, {"from": "eA", "to": "TR", "width": 0}, {"from": "eA", "to": "mm", "width": 0}, {"from": "eS", "to": "mm", "width": 0}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"physics": {"barnesHut": {"gravitationalConstant": -80000, "centralGravity": 0.3, "springLength": 95, "springConstant": 0.04, "damping": 0.09, "avoidOverlap": 0}, "minVelocity": 0.75}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
